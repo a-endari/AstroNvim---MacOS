@@ -4,14 +4,7 @@
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 ---@type LazySpec
-return { -- == Examples of Adding Plugins ==
-"andweeb/presence.nvim", {
-    "ray-x/lsp_signature.nvim",
-    event = "BufRead",
-    config = function()
-        require("lsp_signature").setup()
-    end
-}, -- == Examples of Overriding Plugins ==
+return { -- == Examples of Overriding Plugins ==
 -- customize alpha options
 {
     "goolord/alpha-nvim",
@@ -33,22 +26,8 @@ return { -- == Examples of Adding Plugins ==
              "╚══════╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝"}
         return opts
     end
-},
-
-    lsp = {
-      formatting = {
-        format_on_save = true,
-      },
-      servers = {
-        jdtls = {
-          -- JDTLS will be handled by nvim-jdtls plugin
-          mason = false,
-        },
-      },
-    },
-  
-
-
+} -- new from here
+-- Until here
 -- You can disable default plugins as follows:
 -- { "max397574/better-escape.nvim", enabled = false },
 -- You can also easily customize additional setup of plugins that is outside of the plugin's setup call
