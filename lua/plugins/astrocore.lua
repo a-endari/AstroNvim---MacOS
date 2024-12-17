@@ -33,31 +33,33 @@ return {
             diagnostics = {
                 virtual_text = true,
                 underline = true
-            },
-            -- vim options can be configured here
-            options = {
-                opt = { -- vim.opt.<key>
-                    spelllang = {"en", "de"},
-                    relativenumber = true, -- sets vim.opt.relativenumber
-                    number = true, -- sets vim.opt.number
-                    spell = true, -- sets vim.opt.spell
-                    signcolumn = "yes", -- sets vim.opt.signcolumn to yes
-                    wrap = true, -- sets vim.opt.wrap
-                    -- AE: RTL Support
-                    termbidi = true,
-                    arabicshape = true,
-                    -- AE spelling
-                    conceallevel = 2
-                },
-                g = { -- vim.g.<key>
-                    -- configure global vim variables (vim.g)
-                    -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
-                    -- This can be found in the `lua/lazy_setup.lua` file
-                    vim_markdown_conceal = 2
-
-                }
             }
         },
+        -- vim options can be configured here
+        options = {
+            opt = { -- vim.opt.<key>
+                spelllang = {"en", "de"},
+                relativenumber = true, -- sets vim.opt.relativenumber
+                number = true, -- sets vim.opt.number
+                spell = true, -- sets vim.opt.spell
+                signcolumn = "yes", -- sets vim.opt.signcolumn to yes
+                wrap = true, -- sets vim.opt.wrap
+                -- AE: RTL Support
+                termbidi = true,
+                arabicshape = true,
+                rightleft = false, -- This will be toggled when needed
+                rightleftcmd = "search", -- For command line mode
+                conceallevel = 2 -- for obsidian to hide symbols
+            },
+            g = { -- vim.g.<key>
+                -- configure global vim variables (vim.g)
+                -- NOTE: `mapleader` and `maplocalleader` must be set in the AstroNvim opts or before `lazy.setup`
+                -- This can be found in the `lua/lazy_setup.lua` file
+                vim_markdown_conceal = 3
+
+            }
+        },
+
         -- Mappings can be configured through AstroCore as well.
         -- NOTE: keycodes follow the casing in the vimdocs. For example, `<Leader>` must be capitalized
         mappings = {
@@ -136,40 +138,47 @@ return {
 
                 -- Dictionary mappings
                 ["<leader>dd"] = {
-                    "<cmd>TranslateW<CR>",
-                    desc = "Translate word under cursor (window)"
-                },
-                ["<leader>dg"] = {
-                    ":Translate de:en<CR>",
+                    ":TranslateW<CR>",
                     desc = "Translate German to English"
                 },
                 ["<leader>de"] = {
-                    ":Translate en:de<CR>",
+                    ":TranslateW!<CR>",
                     desc = "Translate English to German"
+                }
+            },
+            -- Add visual mode mappings
+            v = {
+                ["<leader>dg"] = {
+                    ":TranslateW<CR>",
+                    desc = "Translate selection German to English"
                 },
+                ["<leader>de"] = {
+                    ":TranslateW!<CR>",
+                    desc = "Translate selection English to German"
+                }
+            },
 
-                -- Add terminal mode mappings
-                t = {
-                    ["<Esc>"] = {
-                        "<C-\\><C-n>",
-                        desc = "Terminal normal mode"
-                    }
-                },
-                -- tables with just a `desc` key will be registered with which-key if it's installed
-                -- this is useful for naming menus
-                -- ["<Leader>b"] = { desc = "Buffers" },
+            -- Add terminal mode mappings
+            t = {
+                ["<Esc>"] = {
+                    "<C-\\><C-n>",
+                    desc = "Terminal normal mode"
+                }
+            },
+            -- tables with just a `desc` key will be registered with which-key if it's installed
+            -- this is useful for naming menus
+            -- ["<Leader>b"] = { desc = "Buffers" },
 
-                -- setting a mapping to false will disable it
-                -- ["<C-S>"] = false,
-                -- Use Tab to navigate tabs in normal mode!
-                vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", {
-                    noremap = true
-                }),
-                vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", {
-                    noremap = true
-                })
-            }
+            -- setting a mapping to false will disable it
+            -- ["<C-S>"] = false,
+            -- Use Tab to navigate tabs in normal mode!
+            vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", {
+                noremap = true
+            }),
+            vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", {
+                noremap = true
+            })
         }
-
     }
+
 }
