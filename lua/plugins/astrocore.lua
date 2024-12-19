@@ -65,6 +65,12 @@ return {
         mappings = {
             -- first key is the mode
             n = {
+                -- tables with just a `desc` key will be registered with which-key if it's installed
+                -- this is useful for naming menus
+
+                ["<leader>m"] = {
+                    desc = "✎ Markdown Preview"
+                },
                 -- second key is the lefthand side of the map
 
                 -- navigate buffer tabs
@@ -109,33 +115,6 @@ return {
                     ":bnext<CR>",
                     noremap = true
                 },
-
-                -- from here for spell check and dictionary
-                ["<leader>gd"] = {
-                    function()
-                        vim.opt.spelllang = "de"
-                        vim.opt.spell = not vim.opt.spell:get()
-                        if vim.opt.spell:get() then
-                            vim.notify("German spell checking enabled", "info")
-                        else
-                            vim.notify("Spell checking disabled", "info")
-                        end
-                    end,
-                    desc = "Toggle German spell checking"
-                },
-                ["<leader>ge"] = {
-                    function()
-                        vim.opt.spelllang = "en"
-                        vim.opt.spell = not vim.opt.spell:get()
-                        if vim.opt.spell:get() then
-                            vim.notify("English spell checking enabled", "info")
-                        else
-                            vim.notify("Spell checking disabled", "info")
-                        end
-                    end,
-                    desc = "Toggle English spell checking"
-                },
-
                 -- Dictionary mappings
                 ["<leader>dd"] = {
                     ":TranslateW<CR>",
@@ -172,7 +151,7 @@ return {
                     noremap = true,
                     silent = true,
                     desc = "Move cursor right in insert mode"
-                },
+                }
             },
             -- Add visual mode mappings
             v = {
@@ -192,20 +171,13 @@ return {
                     "<C-\\><C-n>",
                     desc = "Terminal normal mode"
                 }
-            },
+            }
             -- tables with just a `desc` key will be registered with which-key if it's installed
             -- this is useful for naming menus
             -- ["<Leader>b"] = { desc = "Buffers" },
 
             -- setting a mapping to false will disable it
             -- ["<C-S>"] = false,
-            -- Use Tab to navigate tabs in normal mode!
-            vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", {
-                noremap = true
-            }),
-            vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", {
-                noremap = true
-            })
         }
     }
 

@@ -14,16 +14,4 @@ return { -- Dictionary/Translation functionality
         vim.g.translator_window_max_height = 0.6
     end,
     keys = {}
-}, -- Configure nvim-cmp for completion
-{
-    "hrsh7th/nvim-cmp",
-    optional = true,
-    opts = function(_, opts)
-        local cmp = require("cmp")
-        opts.sources = cmp.config.sources(vim.list_extend(opts.sources, {{
-            name = "buffer",
-            keyword_length = 2
-        }}))
-        return opts
-    end
 }}

@@ -1,24 +1,44 @@
 return {
     "uga-rosa/cmp-dictionary",
     config = function()
-        local dict_path = vim.fn.stdpath("config") .. "/files/german_words.txt"
-
-        -- Track current dictionary state
+        -- Basic setup
+        local dict_paths = {
+            german = vim.fn.stdpath("config") .. "/files/german_words.txt",
+            english = vim.fn.stdpath("config") .. "/files/english_words.txt"
+        }
         local is_german = true
-
-        -- Set up cmp-dictionary
-        require("cmp_dictionary").setup({
-            paths = {dict_path},
-            exact_length = 2,
-            first_case_insensitive = true,
-            async = false
-        })
-
-        -- Get the current sources from cmp
         local cmp = require("cmp")
-        local default_sources = cmp.get_config().sources
 
-        -- Function to toggle dictionary
+        -- Function to configure dictionary with current language
+        local function setup_dictionary(use_german)
+            require("cmp_dictionary").setup({
+                paths = {use_german and dict_paths.german or dict_paths.english},
+                exact_length = 2,
+                first_case_insensitive = true,
+                async = false
+            })
+            require("cmp_dictionary").update()
+        end
+
+        -- Function to setup completion sources
+        local function setup_completion_sources()
+            local sources = {{
+                name = "dictionary",
+                priority = 1000
+            }}
+
+            -- Get default sources excluding any existing dictionary source
+            local default_sources = cmp.get_config().sources or {}
+            for _, source in ipairs(default_sources) do
+                if source.name ~= "dictionary" then
+                    table.insert(sources, source)
+                end
+            end
+
+            return sources
+        end
+
+        -- Toggle dictionary function
         local function toggle_dictionary()
             if vim.bo.filetype ~= "markdown" then
                 vim.notify("Dictionary toggle only works in markdown files", vim.log.levels.WARN)
@@ -26,47 +46,19 @@ return {
             end
 
             is_german = not is_german
+            setup_dictionary(is_german)
 
-            if is_german then
-                -- Switch to German dictionary
-                require("cmp_dictionary").setup({
-                    paths = {dict_path},
-                    exact_length = 2,
-                    first_case_insensitive = true,
-                    async = false
-                })
-                require("cmp_dictionary").update()
+            cmp.setup.buffer({
+                sources = setup_completion_sources()
+            })
 
-                -- Set up sources with German dictionary
-                local german_sources = {{
-                    name = "dictionary",
-                    priority = 1000
-                }}
-                for _, source in ipairs(default_sources) do
-                    table.insert(german_sources, source)
-                end
-                cmp.setup.buffer({
-                    sources = german_sources
-                })
-            else
-                -- Switch to English spell checking
-                local english_sources = {{
-                    name = "spell",
-                    priority = 1000
-                }}
-                for _, source in ipairs(default_sources) do
-                    table.insert(english_sources, source)
-                end
-                cmp.setup.buffer({
-                    sources = english_sources
-                })
-            end
-
-            -- Notify user
             vim.notify("Switched to " .. (is_german and "German" or "English") .. " completion", vim.log.levels.INFO)
         end
 
-        -- Set up keybinding for dictionary toggle using leader key
+        -- Initial setup
+        setup_dictionary(is_german)
+
+        -- Set up keybinding for dictionary toggle
         vim.keymap.set('n', '<leader>tl', toggle_dictionary, {
             noremap = true,
             silent = true,
@@ -77,24 +69,11 @@ return {
         vim.api.nvim_create_autocmd("FileType", {
             pattern = "markdown",
             callback = function()
-                -- Enable spell checking
                 vim.opt_local.spell = true
                 vim.opt_local.spelllang = "en,de"
 
-                require("cmp_dictionary").update()
-
-                -- Add dictionary to existing sources for markdown files
-                local markdown_sources = {{
-                    name = "dictionary",
-                    priority = 1000
-                }}
-                -- Append existing sources
-                for _, source in ipairs(default_sources) do
-                    table.insert(markdown_sources, source)
-                end
-
                 cmp.setup.buffer({
-                    sources = markdown_sources
+                    sources = setup_completion_sources()
                 })
             end
         })
