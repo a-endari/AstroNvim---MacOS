@@ -1,3 +1,4 @@
+-- remember to 'brew install ripgrep' for QuickSwitch to work
 return {
   "nvim-telescope/telescope-file-browser.nvim",
   dependencies = { "nvim-telescope/telescope.nvim", "nvim-lua/plenary.nvim" },

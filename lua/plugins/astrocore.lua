@@ -146,6 +146,34 @@ return {
                     desc = "Translate English to German"
                 }
             },
+            -- insert mode mappings
+            i = {
+                -- Move cursor in insert mode with Ctrl + h, j, k, l
+                ["<C-h>"] = {
+                    "<Left>",
+                    noremap = true,
+                    silent = true,
+                    desc = "Move cursor left in insert mode"
+                },
+                ["<C-j>"] = {
+                    "<Down>",
+                    noremap = true,
+                    silent = true,
+                    desc = "Move cursor down in insert mode"
+                },
+                ["<C-k>"] = {
+                    "<Up>",
+                    noremap = true,
+                    silent = true,
+                    desc = "Move cursor up in insert mode"
+                },
+                ["<C-l>"] = {
+                    "<Right>",
+                    noremap = true,
+                    silent = true,
+                    desc = "Move cursor right in insert mode"
+                },
+            },
             -- Add visual mode mappings
             v = {
                 ["<leader>dg"] = {
