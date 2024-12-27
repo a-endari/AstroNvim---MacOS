@@ -18,7 +18,8 @@ return {
             cmp = true, -- enable completion at start
             diagnostics_mode = 3, -- diagnostic mode on start (0 = off, 1 = no signs/virtual text, 2 = no virtual text, 3 = on)
             highlighturl = true, -- highlight URLs at start
-            notifications = true -- enable notifications at start
+            notifications = true, -- enable notifications at start
+            autochdir = true --  enable cwd to change automatically
         },
         lsp = {
             formatting = {
