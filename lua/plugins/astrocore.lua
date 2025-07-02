@@ -123,6 +123,17 @@ return {
                 ["<leader>de"] = {
                     ":TranslateW!<CR>",
                     desc = "Translate English to German"
+                },
+                -- Transparency toggle
+                ["<leader>uT"] = {
+                    function()
+                        vim.g.transparent_enabled = not vim.g.transparent_enabled
+                        require("catppuccin").setup({
+                            transparent_background = vim.g.transparent_enabled
+                        })
+                        vim.cmd("colorscheme catppuccin")
+                    end,
+                    desc = "Toggle transparency"
                 }
             },
             -- insert mode mappings

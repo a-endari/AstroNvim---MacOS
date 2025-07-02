@@ -29,7 +29,7 @@ return {
     end
 }, -- Configure Python LSP to only show runtime errors
 {
-    "neovim/nvim-lspconfig",
+     "neovim/nvim-lspconfig",
     opts = {
         servers = {
             pyright = {
@@ -47,17 +47,6 @@ return {
                         }
                     }
                 },
-                handlers = {
-                    ["textDocument/publishDiagnostics"] = vim.lsp.with(
-                        vim.lsp.diagnostic.on_publish_diagnostics, {
-                            virtual_text = {
-                                filter = function(diagnostic)
-                                    return not string.match(diagnostic.message, "reportMissingModuleSource")
-                                end
-                            }
-                        }
-                    )
-                }
             },
             -- Alternative: python-lsp-server (uncomment to use instead of pyright)
             -- pylsp = {
