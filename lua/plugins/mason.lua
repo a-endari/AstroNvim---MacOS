@@ -8,7 +8,7 @@ return { -- use mason-lspconfig to configure LSP installations
     opts = {
       ensure_installed = {
         "lua_ls",
-        "pyright",        -- Python type checking
+        "pylsp",      -- Python LSP server for code completion
         "ruff",       -- Fast Python linter
         "jdtls",  -- Add Java language server
         -- add more arguments for adding more language servers
@@ -22,11 +22,11 @@ return { -- use mason-lspconfig to configure LSP installations
       ensure_installed = {
         "prettier",
         "stylua",
-        "ruff",
+        -- "ruff", -- ruff is installed as an LSP
         -- "black",  -- Disabled in favor of ruff
         -- "isort",  -- Disabled in favor of ruff
-        "mypy",         -- Static type checker
-        "pylint",       -- Python code analysis
+        -- "mypy",         -- Disabled to reduce conflicts with ruff
+        -- "pylint",       -- Disabled in favor of ruff
         "marksman", -- add more arguments for adding more null-ls sources
         "google-java-format",  -- Add Java formatter
         "checkstyle",         -- Add Java style checker
