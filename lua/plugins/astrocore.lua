@@ -95,11 +95,11 @@ return {
         },
         --- python execution mappings
         ["<F5>"] = {
-          "<cmd>w<cr><cmd>split<cr><cmd>term python3 %<cr>",
+          "<cmd>w<cr><cmd>split<cr><cmd>term python3 '%'<cr>",
           desc = "Run Python file",
         },
         ["<leader>rp"] = {
-          "<cmd>w<cr><cmd>split<cr><cmd>term python3 %<cr>",
+          "<cmd>w<cr><cmd>split<cr><cmd>term python3 '%'<cr>",
           desc = "Run Python file",
         },
 
